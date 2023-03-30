@@ -16,56 +16,66 @@ public class App {
 
 	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
-		int opcao = 3;
-		while(true) {
-			menu(opcao);
+		int opc = 300;
+		while (opc != 0) {
+			menu();
 			System.out.print("Escolha a opção: --> ");
-			int opc = sc.nextInt();
-			 if (opc == 0) {
-	                System.out.print("\nAté logo!"); 
-	                break;
-	         }
-			 else {
-				switch (opc) {
-				case 1: {
-					 processar(opc);
+			opc = sc.nextInt();
+			switch (opc) {
+			case 1: {
+				processar(opc);
 				break;
-					}
-				case 2: {
-					 processar(opc);
+			}
+			case 2: {
+				processar(opc);
 				break;
-					}
-				default: {
-					System.out.println("Opção inválida!");
-					}
-				}
-			 }
+			}
+			case 3: {
+				processar(opc);
+				break;
+			}
+			case 0: {
+				System.out.println("Até logo!");
+				break;
+			}
+			default: {
+				System.out.println("Opção inválida!");
+			}
+			}
 		}
+
 		sc.close();
 	}
 
-	public static void menu(int opc) {
-		System.out.println("*------------------------*");
-		System.out.println("|      M   E   N   U     |");
-		System.out.println("*------------------------*");
-		System.out.println("* 1 - USAR A API DA IMDB *");
-		System.out.println("* 2 - USAR A API DA NASA *");
-		System.out.println("* 0 - PARA SAIR          *");
-		System.out.println("*------------------------*");
+	public static void menu() {
+		System.out.println("*--------------------------*");
+		System.out.println("|       M   E   N   U      |");
+		System.out.println("*--------------------------*");
+		System.out.println("* 1 - USAR A API DA IMDB   *");
+		System.out.println("* 2 - USAR A API DA NASA   *");
+		System.out.println("* 3 - USAR A API LINGUAGEM *");
+		System.out.println("* 0 - PARA SAIR            *");
+		System.out.println("*--------------------------*");
 
 	}
 
 	public static void processar(int opc) {
+		
 		ExtratorDeConteudo extrator;
 		if (opc == 1) {
 			// FAZ A CONEXÃO COM O SERVIDOR IMDB
 			url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
 			extrator = new ExtratorDeConteudoDoIMDB();
-		} else {
+		} else if (opc == 2) {
 			// FAZ A CONEXÃO COM O SERVIDOR NASA
 			url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
 			extrator = new ExtratorDeConteudoDaNasa();
 
+		} else {
+			// FAZ A CONEXÃO COM A SERVIDOR LOCAL
+			url = "http://localhost:8080/linguagens";
+			//extrator = new ExtratorDeConteudoLocal();
+			extrator = new ExtratorDeConteudoDoIMDB();
 		}
 
 		ClienteHttp http = new ClienteHttp();
